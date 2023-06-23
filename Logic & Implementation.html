@@ -1,0 +1,218 @@
+<!DOCTYPE HTML>
+<!--
+	Massively by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Generic Page - Massively by HTML5 UP</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<a href="index.html" class="logo">Mafia</a>
+					</header>
+
+				<!-- Nav -->
+					<nav id="nav">
+						<ul class="links">
+							<li><a href="index.html">Introduction</a></li>
+							<li><a href="Simplifications.html">Simplifications</a></li>
+							<li class="active"><a href="Logic & Implementation.html">Implementation</a></li>
+							<li><a href="Example.html">Example</a></li>
+							<li><a href="Experiment & Results.html">Experiment</a></li>
+							<li><a href="Github.html">Github</a></li>
+							<li><a href="References.html">References</a></li>
+						<!--	<li class="active"><a href="elements.html">Elements Reference</a></li> -->
+						</ul>
+						<ul class="icons">
+							<li><a href="https://github.com/Pieter-Jacobs/LAMAS_Weerwolven" class="icon brands fa-github" target="_blank"><span class="label">GitHub</span></a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Post -->
+							<section class="post">
+								<header class="major">
+									<span class="date">June 25, 2023</span>
+									<h1>Logic & <br />
+									Implementation</h1>
+									<p></p>
+								</header>
+								<!-- Agents -->
+								<h3>Agents</h3>
+								<dl>
+									<dt>Villager</dt>
+									<dd>
+										<p>Set of <i>N</i> villagers: Passive, only able to participate in voting.</p>
+									</dd>
+									<dt>Mafia</dt>
+									<dd>
+										<p>Set of <i>M</i> mafiosi: Knows who the other mafia is. Able to murder other players.</p>
+									</dd>
+									<dt>Detective</dt>
+									<dd>
+										<p>Set of <i>K</i> detectives: Able to inspect any player’s role. Works with the villagers.</p>
+									</dd>	
+									<dd>Agents have a sociability s (0 ≤ s ≤ 1), which determines the
+										chance of them starting a conversation. Talking to other agents can raise suspicion. Mafia is always acting suspicious. Pre-defined number of townfolk is marked as acting suspicious.</dd>
+								</dl>
+
+								<!-- Knowledge types -->
+								<h3>Knowledge types</h3>
+								<dl>
+									<ul>
+										<li>Agent <i>i</i> is a villager, mafiosi or detective = <i>v<sub>i</sub></i>, <i>m<sub>i</sub></i>, <i>d<sub>i</sub></i>, respectively</li>
+										<li>Agent <i>i</i> is acting suspiciously: <i>sus<sub>i</sub></i></li>
+										<li>Agent <i>i</i> has been killed: <i>dead<sub>i</sub></i></li>
+									</ul>
+								</dl>
+
+								<!-- Reasoning: Gaining Knowledge -->
+								<h3>Reasoning: Gaining Knowledge</h3>
+								<dl>
+									<ul>
+										<li>Mafia is always acting suspicious: <i>m<sub>i</sub></i> &rarr; <i>sus<sub>i</sub></i></li>
+										<li>Getting suspicious: (<i>agent<sub>i</sub></i> talks to <i>agent<sub>j</sub></i> &and; <i>sus<sub>j</sub></i>) &rarr; <i>K<sub>i</sub>sus<sub>j</sub></i></li>
+										<li>Transfering suspicions: (<i>agent<sub>i</sub></i> talks to <i>agent<sub>j</sub></i> &and; <i>K<sub>j</sub>sus<sub>k</sub></i>) &rarr; <i>K<sub>i</sub>K<sub>j</sub>sus<sub>k</sub></i></li>
+										<li>The detective can get to know whether another agent is Mafia:
+											<ol>
+												<li>(<i>d<sub>i</sub></i> &and; <i>inspect agent<sub>j</sub></i> &and; <i>m<sub>j</sub></i>) &rarr; <i>K<sub>i</sub>m<sub>j</sub></i>  </li>
+												<li>(<i>d<sub>i</sub></i> &and; <i>inspect agent<sub>j</sub></i> &and; &not;<i>m<sub>j</sub></i>)&rarr; <i>K<sub>i</sub>&not;m<sub>j</sub></i> </li>
+											</ol>
+										</li>
+
+									</ul>
+								</dl>
+
+								<!-- Reasoning: Voting -->
+								<h3>Reasoning: Voting</h3>
+								<dl>
+									<ul>
+										<li>Mafia murder and vote on (in order)</li>
+											<ol>
+												<li>Agents that are suspicious of them: <i>K<sub>i</sub>K<sub>j</sub>sus<sub>i</sub></i> &and; &not; <i>dead<sub>j</sub></i></li>
+												<li>No suspicous agents &rarr; A random agent </li>
+											</ol>
+										<li>Townfolk vote on (in order):</li>
+											<ol>
+												<li>Agents that they are suspicous of: <i>K<sub>i</sub>sus<sub>j</sub></i> &and; &not; <i>dead<sub>j</sub></i></li>
+												<li>Agents they know other agents are suspicous of: <i>K<sub>i</sub>K<sub>j</sub>sus<sub>k</sub></i> &and; &not; <i>dead<sub>k</sub></i></li>
+												<li>No suspicous agents &rarr; A random agent </li>
+											</ol>
+										<li>When there is a tie in voting, a random decision is made among the tied options.</li>
+									</ul>
+								</dl>
+
+								<!-- Model Initialization: Worlds -->
+								<h3>Model Initialization: Worlds</h3>
+								<dl>
+									<ul>
+										<li>Worlds are defined by the distribution of the agent’s roles. Example: a world with 3 agents and the name mvd implies:
+											<ol>
+												<li>Agent 1 is a <i>mafioso</i> </li>
+												<li>Agent 2 is a <i>villager</i> </li>
+												<li>Agent 3 is a <i>detective</i> </li>
+											</ol>
+										</li>
+										<li>Each possible world relates to a permutation of the roles’ distribution</li>
+									</ul>
+								</dl>
+
+								<!-- Model Initialization: Knowledge -->
+								<h3>Model Initialization: Knowledge</h3>
+								<dl>
+									<ul>
+										<li>Every agent knows their own role:
+											&forall;((<i>v<sub>x</sub> &rarr; K<sub>x</sub>v<sub>x</sub></i>) &and; (<i>m<sub>x</sub> &rarr; K<sub>x</sub>m<sub>x</sub> </i>) &and; (<i>d<sub>x</sub> &rarr; K<sub>x</sub>d<sub>x</sub> </i>))
+										</li>
+										<li>Mafia knows other mafia:
+											&forall;<sub>x</sub>(<i>m<sub>x</sub> &rarr; </i>&forall;<i>y(m<sub>y</sub> &rarr; K<sub>x</sub>m<sub>y</sub> </i>))
+										</li>
+									</ul>
+								</dl>
+
+								<!-- Model Initialization: Example -->
+								<h3>Model Initialization: Example</h3>
+								<dl>
+									<div class="image"><img src="images/example.png" alt="" />
+										<figcaption><b>Figure 1:</b> Example model initialization with three agents.</figcaption>
+									</div>
+									<ul>
+										<li></li>
+									</ul>
+								</dl>
+
+								<!-- Formal modal -->
+								<h3>Formal modal</h3>
+								<dl>
+									Kripke model <i>M</i> with <i>&lt;S, &pi;, R<sub>1</sub>, R<sub>2</sub>,..., R<sub>n</sub>&gt;</i>
+									<ul>
+										<li>A set of states <i>S = &#123;s<sub>i</sub>&#124;i</i> is a permutation of the roles' distribution</li>
+										<li>A truth assignment &pi; which assigns a truth value to all propositions P where &pi;(<i>s<sub>i</sub>)(role<sub>j</sub>) = t &LeftRightArrow; i<sub>j</sub> = role</i>
+										with <i>role &in; &#123;v,m,d&#125;</i></li>
+										<li>A set of relations for each agent <i>i: R<sub>i</sub> = &#123;(s<sub>i</sub>, s<sub>j</sub>)&#124;&#125;</i> where for each 
+										<i>R<sub>j</sub>&#8838; SxS</i> such that
+											<ol>
+												<li><i>R<sub>j</sub> = &#123;(u,v) &in; SxS &#124; &pi;(u)(role<sub>j</sub>) = t &LeftRightArrow; &pi;(v)(role<sub>j</sub>)=t&#125;</i> where <i>j &in; Agents</i></li>
+												<li><i>R<sub>j</sub> = &#123;(u,v) &in; SxS &#124; (&pi;(u)(m<sub>j</sub>) = t and &pi;(u)(m<sub>k</sub>)) = t &LeftRightArrow; &pi;(v)(m<sub>j</sub>) = t and &pi;(v)(m<sub>k</sub>) = t&#125;
+												where <i>j, k &in; Agents</i>
+												</li>
+											</ol>		
+									</li>
+									</ul>
+								</dl>
+
+
+
+
+
+							</section>
+							<footer>
+								<div class="pagination">
+									<a href="Simplifications.html" class="previous">Prev</a>
+									<a href="Example.html" class="next">Next</a>
+								</div>
+							</footer>
+							<ul class="actions small">
+								<li><a href="index.html" class="button small">Introduction</a></li>
+								<li><a href="Simplifications.html" class="button small">Simplifications</a></li>
+								<li><a href="Logic & Implementation.html" class="button primary small">Implementation</a></li>
+								<li><a href="Example.html" class="button small">Example</a></li>
+								<li><a href="Experiment & Results.html" class="button small">Experiment</a></li>
+								<li><a href="Github.html" class="button small">Github</a></li>
+								<li><a href="References.html" class="button small">References</a></li>
+							</ul>
+
+
+					</div>
+
+				<!-- Copyright -->
+					<div id="copyright">
+						<ul><li>&copy; Untitled</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
