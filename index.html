@@ -1,93 +1,123 @@
 <!DOCTYPE HTML>
 <html>
-	<head>
-		<title>LAMAS project: Mafia</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-	</head>
-	<body class="is-preload">
 
-		<!-- Wrapper -->
-			<div id="wrapper" class="fade-in">
+<head>
+	<title>LAMAS project: Mafia</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="assets/css/main.css" />
+	<noscript>
+		<link rel="stylesheet" href="assets/css/noscript.css" />
+	</noscript>
+</head>
 
-				<!-- Intro -->
-					<div id="intro">
-						<h1>LAMAS project: Mafia</h1>
-						<p>Project by: Tom Veldhuis s..., Pieter Jacobs s..., Twan Vos s3734870</p>
-						<ul class="actions">
-							<li><a href="#header" class="button icon solid solo fa-arrow-down scrolly">Continue</a></li>
-						</ul>
+<body class="is-preload">
+
+	<!-- Wrapper -->
+	<div id="wrapper" class="fade-in">
+
+		<!-- Intro -->
+		<div id="intro">
+			<h1>LAMAS project: Mafia</h1>
+			<p>Project by: Tom Veldhuis s..., Pieter Jacobs s3777693, Twan Vos s3734870</p>
+			<ul class="actions">
+				<li><a href="#header" class="button icon solid solo fa-arrow-down scrolly">Continue</a></li>
+			</ul>
+		</div>
+
+		<!-- Header -->
+		<header id="header">
+			<a href="index.html" class="logo">Mafia</a>
+		</header>
+
+		<!-- Nav -->
+		<nav id="nav">
+			<ul class="links">
+				<li class="active"><a href="index.html">Introduction</a></li>
+				<li><a href="Simplifications.html">Simplifications</a></li>
+				<li><a href="Logic & Implementation.html">Implementation</a></li>
+				<li><a href="Example.html">Example</a></li>
+				<li><a href="Experiment & Results.html">Experiment</a></li>
+				<li><a href="Github.html">Github</a></li>
+				<li><a href="References.html">References</a></li>
+				<!--	<li class="active"><a href="elements.html">Elements Reference</a></li> -->
+			</ul>
+			<ul class="icons">
+				<li><a href="https://github.com/Pieter-Jacobs/LAMAS_Weerwolven" class="icon brands fa-github"
+						target="_blank"><span class="label">GitHub</span></a></li>
+			</ul>
+		</nav>
+
+		<!-- Main -->
+		<div id="main">
+			<!-- Featured Post -->
+			<article class="post featured">
+				<header class="major">
+					<span class="date">June 25, 2023</span>
+					<h1><a>Introduction</a></h1>
+				</header>
+				<!-- <video src="images/video_detective.mp4" width="480" height="320" autoplay loop muted>
+					Your browser does not support the video tag.
+				</video> -->
+				<footer>
+
+					<h2>The Game of Mafia</h2>
+					<p>Mafia is a strategy game about a battle between two distinct factions.
+						On one side, the Mafia forms a minority but is equipped with the knowledge of who the other
+						mafiosi are. They share a common goal to eliminate the Townfolk. The Townfolk, comprising an
+						unaware majority, must
+						navigate the deceit of the mafia and strategise to identify and eliminate the hidden
+						Mafia members, initially having no other knowledge than their own role.
+						<br/>
+						The game is split into two types of phases: day and night. During the night phase, the
+						mafia members carefully select a villager to be eliminated from the game. Moreover, there
+						are various other special roles [1], most of which also can perform their special ability during
+						the night phase. Take for instance the often used detective, who is able to inspect any player
+						to get to know their role.
+						<br/>
+						In the day phase, all players come together to discuss and debate. Through deliberation and
+						analysis of behavioral cues, the
+						players engage in a democratic voting process to determine who they suspect of being part of
+						the mafia. The mafia, logically, tries to deceive the townfolk and to not have anyone part of
+						their faction voted out.
+						<br/>
+						The game concludes when one of two conditions is met: either all mafia members are successfully
+						eliminated, resulting in a victory for the villagers, or the mafia manages to eliminate all
+						non-mafia players, securing a win for themselves. 
+						
+					</p>
+
+
+					<h2>Our Project</h2>
+					<p>Strategic thinking takes center stage throughout the game. The Mafia carefully selects their
+						victims while trying to manipulate the Townfolk's perceptions. Meanwhile, the
+						Townfolk strategize during the day phase, leveraging social interactions, arguments, and
+						alliances to build a consensus on who they believe to be part of the Mafia. One could argue that 
+						the more knowledge the players have, the better they are able to navigate through the different phases
+						and achieve the goal of eliminating the other faction. Our project will focus on modelling the game of mafia
+						in a way where agents, like in the real game, can use conversations and deductive reasoning to find out the roles of other players.
+						In doing so, we hope to answer the following:
+						<br/>
+						<strong>Research Question.</strong> How does the incorporation of epistemic logic influence the outcome of the
+						game of mafia?
+
+					<div class="pagination">
+						<!--<a href="#" class="previous">Prev</a>-->
+						<a href="Simplifications.html" class="next">Next</a>
 					</div>
+				</footer>
+			</article>
+			<ul class="actions small">
+				<li><a href="index.html" class="button primary small">Introduction</a></li>
+				<li><a href="Simplifications.html" class="button small">Simplifications</a></li>
+				<li><a href="Logic & Implementation.html" class="button small">Implementation</a></li>
+				<li><a href="Example.html" class="button small">Example</a></li>
+				<li><a href="Experiment & Results.html" class="button small">Experiment</a></li>
+				<li><a href="Github.html" class="button small">Github</a></li>
+				<li><a href="References.html" class="button small">References</a></li>
+			</ul>
 
-				<!-- Header -->
-					<header id="header">
-						<a href="index.html" class="logo">Mafia</a>
-					</header>
-
-				<!-- Nav -->
-					<nav id="nav">
-						<ul class="links">
-							<li class="active"><a href="index.html">Introduction</a></li>
-							<li><a href="Simplifications.html">Simplifications</a></li>
-							<li><a href="Logic & Implementation.html">Implementation</a></li>
-							<li><a href="Example.html">Example</a></li>
-							<li><a href="Experiment & Results.html">Experiment</a></li>
-							<li><a href="Github.html">Github</a></li>
-							<li><a href="References.html">References</a></li>
-						<!--	<li class="active"><a href="elements.html">Elements Reference</a></li> -->
-						</ul>
-						<ul class="icons">
-							<li><a href="https://github.com/Pieter-Jacobs/LAMAS_Weerwolven" class="icon brands fa-github" target="_blank"><span class="label">GitHub</span></a></li>
-						</ul>
-					</nav>
-
-				<!-- Main -->
-					<div id="main">
-
-						<!-- Featured Post -->
-							<article class="post featured">
-								<header class="major">
-									<span class="date">June 25, 2023</span>
-									<h2><a>Introduction to our LAMAS project</a></h2>
-									<p>Our group chose to model the game of mafia for the LAMAS project............... </p>
-								</header>
-								<video src="images/video_detective.mp4" width="640" height="480" autoplay loop muted>
-									Your browser does not support the video tag.
-								</video>
-								<footer>
-								<header>
-									<h2>How the game works</h2>
-								</header>
-								<p>The mafia game is a group activity where players are assigned roles as villagers
-									or mafia. The game consists of night and day phases. During the night, the
-									mafia chooses a villager to kill, and the detective can investigate someone’s
-									mafia status. In the day phase, the villagers discuss and vote on who they
-									suspect is part of the mafia. The game ends when either all mafia members are
-									eliminated (villagers win) or all non-mafia players are killed (mafia wins). The
-									detective’s role adds strategic elements to the voting process. The assigned roles
-									are hidden, allowing anyone to claim to be the detective, making it challenging
-									for the real detective to navigate their role. The question that we'll try to answer with this model is: How does the incorporation of epistemic logic influence the outcome of the
-									game of mafia?.</p>
-									
-									<div class="pagination">
-										<!--<a href="#" class="previous">Prev</a>-->
-										<a href="Simplifications.html" class="next">Next</a>
-									</div>
-								</footer>
-							</article>
-							<ul class="actions small">
-								<li><a href="index.html" class="button primary small">Introduction</a></li>
-								<li><a href="Simplifications.html" class="button small">Simplifications</a></li>
-								<li><a href="Logic & Implementation.html" class="button small">Implementation</a></li>
-								<li><a href="Example.html" class="button small">Example</a></li>
-								<li><a href="Experiment & Results.html" class="button small">Experiment</a></li>
-								<li><a href="Github.html" class="button small">Github</a></li>
-								<li><a href="References.html" class="button small">References</a></li>
-							</ul>
-
-				<!-- Footer 
+			<!-- Footer 
 					<footer id="footer">
 						<section>
 							<form method="post" action="#">
@@ -136,21 +166,25 @@
 						</section>
 					</footer>
 					-->
-				<!-- Copyright -->
-					<div id="copyright">
-						<ul><li>&copy; Untitled</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li></ul>
-					</div>
-
+			<!-- Copyright -->
+			<div id="copyright">
+				<ul>
+					<li>&copy; Untitled</li>
+					<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+				</ul>
 			</div>
 
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.scrollex.min.js"></script>
-			<script src="assets/js/jquery.scrolly.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+		</div>
 
-	</body>
+		<!-- Scripts -->
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/jquery.scrollex.min.js"></script>
+		<script src="assets/js/jquery.scrolly.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
+
+</body>
+
 </html>
