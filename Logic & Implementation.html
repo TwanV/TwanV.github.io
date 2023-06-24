@@ -49,36 +49,43 @@
 			<section class="post">
 				<header class="major">
 					<span class="date">June 25, 2023</span>
-					<h1>Logic & <br />
+					<h1><br />
 						Implementation</h1>
 					<p></p>
 				</header>
 				<!-- Agents -->
-				<h3>Agents</h3>
-				<dl>
-					<dt>Villager</dt>
-					<dd>
-						<p>Set of <i>N</i> villagers: Passive, only able to participate in voting.</p>
-					</dd>
-					<dt>Mafia</dt>
-					<dd>
-						<p>Set of <i>M</i> mafiosi: Knows who the other mafia is. Able to murder other players.</p>
-					</dd>
-					<dt>Detective</dt>
-					<dd>
-						<p>Set of <i>K</i> detectives: Able to inspect any player’s role. Works with the villagers.</p>
-					</dd>
-					<dd>Agents have a sociability s (0 ≤ s ≤ 1), which determines the
-						chance of them starting a conversation. Talking to other agents can raise suspicion. Mafia is
-						always acting suspicious. Pre-defined number of townfolk is marked as acting suspicious.</dd>
-				</dl>
+				<h2>Agents</h2>
+				<p>In our model, there are three types of agent roles: villager, mafia, and detective. We have chosen
+					to limit the roles to three to keep the model relatively simple. The roles of Mafia and Villager are
+					essential for the
+					game, but to further incorporate logic, the role of detective has been added.
+					Each role has its own
+					characteristics and abilities:</p>
+				<ul>
+					<li>
+						<strong>Villager</strong>
+						is a passive role, that is only able to participate in voting during the day phase.</p>
+					</li>
+					<li>
+						<strong>Mafia</strong> is a more knowledgable and powerful role. They know who the other mafiosi
+						are and are able to murder other players during the night phase.
+					</li>
+					<li>
+						<strong>The detective</strong> is able to inspect any player's role and is part of the townfolk,
+						meaning he/she works together with the villagers.
 
+					</li>
+				</ul>
+
+				Agents are able to interact with eachother in the day phase, prior to voting. This is the moment they
+				are able to gather information on who is acting suspiously and could be part of the mafia.
 				<!-- Knowledge types -->
 				<h3>Knowledge types</h3>
 				<dl>
 					<ul>
 						<li>Agent <i>i</i> is a villager, mafiosi or detective = <i>v<sub>i</sub></i>,
-							<i>m<sub>i</sub></i>, <i>d<sub>i</sub></i>, respectively</li>
+							<i>m<sub>i</sub></i>, <i>d<sub>i</sub></i>, respectively
+						</li>
 						<li>Agent <i>i</i> is acting suspiciously: <i>sus<sub>i</sub></i></li>
 						<li>Agent <i>i</i> has been killed: <i>dead<sub>i</sub></i></li>
 					</ul>
@@ -90,14 +97,16 @@
 					<ul>
 						<li>Mafia is always acting suspicious: <i>m<sub>i</sub></i> &rarr; <i>sus<sub>i</sub></i></li>
 						<li>Getting suspicious: (<i>agent<sub>i</sub></i> talks to <i>agent<sub>j</sub></i> &and;
-							<i>sus<sub>j</sub></i>) &rarr; <i>K<sub>i</sub>sus<sub>j</sub></i></li>
+							<i>sus<sub>j</sub></i>) &rarr; <i>K<sub>i</sub>sus<sub>j</sub></i>
+						</li>
 						<li>Transfering suspicions: (<i>agent<sub>i</sub></i> talks to <i>agent<sub>j</sub></i> &and;
 							<i>K<sub>j</sub>sus<sub>k</sub></i>) &rarr; <i>K<sub>i</sub>K<sub>j</sub>sus<sub>k</sub></i>
 						</li>
 						<li>The detective can get to know whether another agent is Mafia:
 							<ol>
 								<li>(<i>d<sub>i</sub></i> &and; <i>inspect agent<sub>j</sub></i> &and;
-									<i>m<sub>j</sub></i>) &rarr; <i>K<sub>i</sub>m<sub>j</sub></i> </li>
+									<i>m<sub>j</sub></i>) &rarr; <i>K<sub>i</sub>m<sub>j</sub></i>
+								</li>
 								<li>(<i>d<sub>i</sub></i> &and; <i>inspect agent<sub>j</sub></i> &and;
 									&not;<i>m<sub>j</sub></i>)&rarr; <i>K<sub>i</sub>&not;m<sub>j</sub></i> </li>
 							</ol>
@@ -119,7 +128,8 @@
 						<li>Townfolk vote on (in order):</li>
 						<ol>
 							<li>Agents that they are suspicous of: <i>K<sub>i</sub>sus<sub>j</sub></i> &and; &not;
-								<i>dead<sub>j</sub></i></li>
+								<i>dead<sub>j</sub></i>
+							</li>
 							<li>Agents they know other agents are suspicous of:
 								<i>K<sub>i</sub>K<sub>j</sub>sus<sub>k</sub></i> &and; &not; <i>dead<sub>k</sub></i>
 							</li>
@@ -192,27 +202,27 @@
 								<li><i>R<sub>j</sub> = &#123;(u,v) &in; SxS &#124; (&pi;(u)(m<sub>j</sub>) = t and
 										&pi;(u)(m<sub>k</sub>)) = t &LeftRightArrow; &pi;(v)(m<sub>j</sub>) = t and
 										&pi;(v)(m<sub>k</sub>) = t&#125</i>;
-										where <i>j, k &in; Agents</i>
+									where <i>j, k &in; Agents</i>
 								</li>
 							</ol>
 						</li>
 					</ul>
 				</dl>
 			</section>
-				<footer>
-					<div class="pagination">
-						<a href="index.html" class="previous">Prev</a>
-						<a href="Example.html" class="next">Next</a>
-					</div>
-				</footer>
-				<ul class="actions small">
-					<li><a href="index.html" class="button small">Introduction</a></li>
-					<li><a href="Logic & Implementation.html" class="button primary small">Implementation</a></li>
-					<li><a href="Example.html" class="button small">Example Run</a></li>
-					<li><a href="Experiment & Results.html" class="button small">Experiments & Results</a></li>
-					<li><a href="Discussion.html" class="button small">Discussion</a></li>
-					<li><a href="References.html" class="button small">References</a></li>
-				</ul>
+			<footer>
+				<div class="pagination">
+					<a href="index.html" class="previous">Prev</a>
+					<a href="Example.html" class="next">Next</a>
+				</div>
+			</footer>
+			<ul class="actions small">
+				<li><a href="index.html" class="button small">Introduction</a></li>
+				<li><a href="Logic & Implementation.html" class="button primary small">Implementation</a></li>
+				<li><a href="Example.html" class="button small">Example Run</a></li>
+				<li><a href="Experiment & Results.html" class="button small">Experiments & Results</a></li>
+				<li><a href="Discussion.html" class="button small">Discussion</a></li>
+				<li><a href="References.html" class="button small">References</a></li>
+			</ul>
 		</div>
 
 		<!-- Scripts -->

@@ -2310,7 +2310,9 @@ input, select, textarea {
 					}
 
 		}
-
+	.rq {
+		font-size: 110%;
+	}
 	label {
 		display: block;
 		font-family: "Source Sans Pro", Helvetica, sans-serif;
