@@ -49,12 +49,10 @@
 			<section class="post">
 				<header class="major">
 					<span class="date">June 25, 2023</span>
-					<h1><br />
-						Implementation</h1>
-					<p></p>
+					<h1>Implementation</h1>
 				</header>
 				<!-- Agents -->
-				<h2>Agents</h2>
+				<h2>1. Agents</h2>
 				<p>In our model, there are three types of agent roles: villager, mafia, and detective. We have chosen
 					to limit the roles to three to keep the model relatively simple. The roles of Mafia and Villager are
 					essential for the
@@ -103,8 +101,8 @@
 					behave when they suspect another agent.</p>
 
 				<!-- Knowledge types -->
-				<h2>Knowledge and Reasoning</h2>
-				<h3>Knowledge Types</h3>
+				<h2>2. Knowledge and Rules</h2>
+				<h3>2.1 Knowledge Types</h3>
 
 				There are three types of knowledge we represent in the model, namely:
 				<ul>
@@ -112,98 +110,124 @@
 						<i>v<sub>i</sub></i>,
 						<i>m<sub>i</sub></i>, <i>d<sub>i</sub></i>, respectively
 					</li>
-					<li>Knowledege of that agent <i>i</i> is acting suspiciously: <i>sus<sub>i</sub></i></li>
+					<li>Knowledge of that agent <i>i</i> is acting suspiciously: <i>sus<sub>i</sub></i></li>
 					<li>Knowledge of that agent <i>i</i> has been killed: <i>dead<sub>i</sub></i></li>
 				</ul>
 
 				<!-- Reasoning: Gaining Knowledge -->
-				<h3>Reasoning</h3>
-				The agents can obtain the different types of knowledge in a variety of ways. The following rules
-				represent the logical rules of our model. With rule 1 through 4 dealing with how agents can obtain
-				knowledge and 5 through ... dealing with how the agents use it in voting.
+				<h3>2.2 Rules</h3>
+				The following rules represent the logical rules of our model. With rule 1 through 4 dealing with how
+				agents can obtain
+				knowledge and rule 5 and 6 deal with how the agents use it in voting.
 
 				<ol>
 					<li>As mentioned above, suspicion of an agent can occur during conversation.
 						To elaborate on this, mafia are always considered to be acting suspiciously as this is inherent
-						to their role: <i>m<sub>i</sub></i> &rarr; <i>sus<sub>i</sub></i></li>
-					<li>Getting suspicious: (<i>agent<sub>i</sub></i> talks to <i>agent<sub>j</sub></i> &and;
-						<i>sus<sub>j</sub></i>) &rarr; <i>K<sub>i</sub>sus<sub>j</sub></i>
+						to their role: <strong><i>m<sub>i</sub></i> &rarr; <i>sus<sub>i</sub></i></strong>. Note that it
+						is also possible
+						for other roles to act suspicious, which will be explained in Section 3.</li>
+					<li>Agents get suspicious of each other based on the conversations they have with each other:
+						<strong>(<i>agent<sub>i</sub></i> talks to <i>agent<sub>j</sub></i> &and;
+							<i>sus<sub>j</sub></i>) &rarr; <i>K<sub>i</sub>sus<sub>j</sub></i></strong>.
 					</li>
-					<li>Transfering suspicions: (<i>agent<sub>i</sub></i> talks to <i>agent<sub>j</sub></i> &and;
-						<i>K<sub>j</sub>sus<sub>k</sub></i>) &rarr; <i>K<sub>i</sub>K<sub>j</sub>sus<sub>k</sub></i>
+					<li>Agents get to know each other's suspicions through conversation:
+						<strong>(<i>agent<sub>i</sub></i> talks to <i>agent<sub>j</sub></i> &and;
+							<i>K<sub>j</sub>sus<sub>k</sub></i>) &rarr;
+							<i>K<sub>i</sub>K<sub>j</sub>sus<sub>k</sub></i></strong>.
 					</li>
-					<li>The detective can get to know whether another agent is Mafia:
-						<ol>
-							<li>(<i>d<sub>i</sub></i> &and; <i>inspect agent<sub>j</sub></i> &and;
-								<i>m<sub>j</sub></i>) &rarr; <i>K<sub>i</sub>m<sub>j</sub></i>
+					<li>The detective can get to know whether another agent is Mafia with his special ability:
+						<ol class="margin-0">
+							<li><strong>(<i>d<sub>i</sub></i> &and; <i>inspect agent<sub>j</sub></i> &and;
+									<i>m<sub>j</sub></i>) &rarr; <i>K<sub>i</sub>m<sub>j</sub></i></strong>
 							</li>
-							<li>(<i>d<sub>i</sub></i> &and; <i>inspect agent<sub>j</sub></i> &and;
-								&not;<i>m<sub>j</sub></i>)&rarr; <i>K<sub>i</sub>&not;m<sub>j</sub></i> </li>
+							<li><strong>(<i>d<sub>i</sub></i> &and; <i>inspect agent<sub>j</sub></i> &and;
+									&not;<i>m<sub>j</sub></i>)&rarr; <i>K<sub>i</sub>&not;m<sub>j</sub></i></strong>
+							</li>
 						</ol>
 					</li>
-
+					<li>Mafia murder and vote on (in order)</li>
+					<ol class="margin-0">
+						<li>Agents that they know are suspicious of them:
+							<strong><i>K<sub>i</sub>K<sub>j</sub>sus<sub>i</sub></i>
+								&and; &not; <i>dead<sub>j</sub></i></strong>
+						</li>
+						<li>A random agent</li>
+					</ol>
+					<li>Townfolk vote on (in order):</li>
+					<ol class="margin-0">
+						<li>Agents that they are suspicous of: <strong><i>K<sub>i</sub>sus<sub>j</sub></i> &and; &not;
+								<i>dead<sub>j</sub></i></strong>.
+						</li>
+						<li>Agents they know other agents are suspicous of:
+							<strong><i>K<sub>i</sub>K<sub>j</sub>sus<sub>k</sub></i> &and; &not;
+							<i>dead<sub>k</sub></i></strong>. We consider this as a second, less trustworthy type of
+							knowledge as it is the agents have not conversated with the suspicious agent themselves.
+						</li>
+						<li>A random agent </li>
+					</ol>
 				</ol>
+				<p>In our simulation, it is important to note that a voting tie can occur when using rules 5 and 6. To
+					address this situation, we have chosen to randomly resolve the tie and eliminate a player. This
+					decision
+					was made to prevent the simulation from getting stuck in a stalemate, where all agents continuously
+					vote
+					for the same player and ties occur in a repetitive loop. Randomly resolving ties is also a
+					recognized
+					approach in real-life Mafia games to break voting deadlocks <a href="References.html">[2]</a>.</p>
 
-				<!-- Reasoning: Voting -->
-				<h3>Reasoning: Voting</h3>
-				<dl>
-					<ul>
-						<li>Mafia murder and vote on (in order)</li>
-						<ol>
-							<li>Agents that are suspicious of them: <i>K<sub>i</sub>K<sub>j</sub>sus<sub>i</sub></i>
-								&and; &not; <i>dead<sub>j</sub></i></li>
-							<li>No suspicous agents &rarr; A random agent </li>
-						</ol>
-						<li>Townfolk vote on (in order):</li>
-						<ol>
-							<li>Agents that they are suspicous of: <i>K<sub>i</sub>sus<sub>j</sub></i> &and; &not;
-								<i>dead<sub>j</sub></i>
-							</li>
-							<li>Agents they know other agents are suspicous of:
-								<i>K<sub>i</sub>K<sub>j</sub>sus<sub>k</sub></i> &and; &not; <i>dead<sub>k</sub></i>
-							</li>
-							<li>No suspicous agents &rarr; A random agent </li>
-						</ol>
-						<li>When there is a tie in voting, a random decision is made among the tied options.</li>
-					</ul>
-				</dl>
+				<h2>3. The Kripke Model</h2>
+				<p>To model the agents knowledge and what they consider to be possible, we use a kripke model <a
+						href="References.html">[3]</a>. This is a
+					mathematical structure used in modal logic to represent the knowledge and belief states of agents in
+					a
+					system. It consists of a set of possible worlds, each with its own interpretation of propositions,
+					and a
+					set of accessibility relations that describe the relationships between worlds and the agents'
+					beliefs
+					about those relationships. The Kripke model provides a framework for reasoning about the logical
+					properties of knowledge, belief, and other modalities within a given system and is thus very
+					suitable for our
+					multi agent system of Mafia.</p>
 
-
-				<h2>The Kripke Model</h2>
 				<!-- Model Initialization: Worlds -->
-				<h3>Model Initialization: Worlds</h3>
-				<dl>
-					<ul>
-						<li>Worlds are defined by the distribution of the agent’s roles. Example: a world with 3 agents
-							and the name mvd implies:
-							<ol>
-								<li>Agent 1 is a <i>mafioso</i> </li>
-								<li>Agent 2 is a <i>villager</i> </li>
-								<li>Agent 3 is a <i>detective</i> </li>
-							</ol>
-						</li>
-						<li>Each possible world relates to a permutation of the roles’ distribution</li>
-					</ul>
-				</dl>
+				<h3>3.1 Initialization</h3>
+				<p>Our Kripke model represents the different combinations of roles and suspicions in the game scenario.
+					It is initialized with every possible permutation of the chosen roles, along with possible
+					combinations for which agents can be suspicious. As mentioned previously, mafia is always considered
+					to be acting suspiciously. Alongside this however, we mark every other role as suspicious with a
+					probabilitiy of <em>p</em>. This means that it is indeed possible for every single agent to act
+					suspiciously, which results in various extra worlds in the intialization.
 
-				<!-- Model Initialization: Knowledge -->
-				<h3>Model Initialization: Knowledge</h3>
-				<dl>
-					<ul>
-						<li>Every agent knows their own role:
-							&forall;((<i>v<sub>x</sub> &rarr; K<sub>x</sub>v<sub>x</sub></i>) &and; (<i>m<sub>x</sub>
-								&rarr; K<sub>x</sub>m<sub>x</sub> </i>) &and; (<i>d<sub>x</sub> &rarr;
-								K<sub>x</sub>d<sub>x</sub> </i>))
-						</li>
-						<li>Mafia knows other mafia:
-							&forall;<sub>x</sub>(<i>m<sub>x</sub> &rarr; </i>&forall;<i>y(m<sub>y</sub> &rarr;
-								K<sub>x</sub>m<sub>y</sub> </i>))
-						</li>
-					</ul>
-				</dl>
+					To examplify, say we have a game with two villagers, two mafiosi, and one detective.
+					Considering the possible combinations of roles, we have a total of 5!/(2!2!1!) = 30 different role
+					assignments for the players.
 
-				<!-- Model Initialization: Example -->
-				<h3>Model Initialization: Example</h3>
+					Additionally, we have the concept of suspicions, where each player can be suspicious or not
+					suspicious. Since the mafia is always suspicious, we don't consider different possibilities for
+					their suspicions. However, the villagers and detective can be suspicious or not suspicious,
+					resulting in 2^3 = 8 different combinations of suspicions for these players.
+
+					Therefore, in our model, we have a total of 30 * 8 = 240 different worlds in the Kripke model, each
+					representing a unique combination of roles and suspicions for the players.
+
+					As for the relation, we consider the following:
+				<ul>
+					<li>Every agent knows their own role meaning that they can only distinguish between worlds where the
+						their role is assigned in the same way::
+						&forall;((<i>v<sub>x</sub> &rarr; K<sub>x</sub>v<sub>x</sub></i>) &and; (<i>m<sub>x</sub>
+							&rarr; K<sub>x</sub>m<sub>x</sub> </i>) &and; (<i>d<sub>x</sub> &rarr;
+							K<sub>x</sub>d<sub>x</sub> </i>))
+					</li>
+					<li>Mafia knows who the other mafia is, meaning that they can only distinguish between worlds where
+						the mafia role is assigned in the same way:
+						&forall;<sub>x</sub>(<i>m<sub>x</sub> &rarr; </i>&forall;<i>y(m<sub>y</sub> &rarr;
+							K<sub>x</sub>m<sub>y</sub> </i>))
+					</li>
+				</ul>
+				<p>An example initialization of four agents is provided in Figure 1. Note that the names of the worlds
+					are the first letter of the roles of the agents in order, with a star behind the letter meaning the
+					agent is marked as suspicious.</p>
+
 				<dl>
 					<div class="image"><img src="images/example.png" alt="" />
 						<figcaption><b>Figure 1:</b> Example model initialization with three agents.</figcaption>
@@ -213,8 +237,10 @@
 					</ul>
 				</dl>
 
+
+
 				<!-- Formal modal -->
-				<h3>Formal model</h3>
+				<h3>3.2 Formal model</h3>
 				<dl>
 					Kripke model <i>M</i> with <i>&lt;S, &pi;, R<sub>1</sub>, R<sub>2</sub>,..., R<sub>n</sub>&gt;</i>
 					<ul>
@@ -239,6 +265,7 @@
 						</li>
 					</ul>
 				</dl>
+
 			</section>
 			<footer>
 				<div class="pagination">
