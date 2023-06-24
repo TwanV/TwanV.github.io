@@ -64,56 +64,85 @@
 				<ul>
 					<li>
 						<strong>Villager</strong>
-						is a passive role, that is only able to participate in voting during the day phase.</p>
+						is a passive role, that is only able to participate in voting during the day phase.
 					</li>
 					<li>
 						<strong>Mafia</strong> is a more knowledgable and powerful role. They know who the other mafiosi
 						are and are able to murder other players during the night phase.
 					</li>
 					<li>
-						<strong>The detective</strong> is able to inspect any player's role and is part of the townfolk,
+						<strong>The detective</strong> is able to inspect any player's role during the night, being the
+						only role that gets to expand its knowledge
+						in a different way from conversations. The detective is part of the townfolk,
 						meaning he/she works together with the villagers.
-
 					</li>
 				</ul>
 
-				Agents are able to interact with eachother in the day phase, prior to voting. This is the moment they
-				are able to gather information on who is acting suspiously and could be part of the mafia.
+				<p>
+					During the day phase, all agents have the ability to interact with each other before voting. This
+					interaction allows them to gather information and identify potential mafia members who may be acting
+					suspiciously. To determine the likelihood of agents initiating a conversation, we assign each of
+					them a
+					sociability stat (<i>s</i>), randomly sampled from a uniform distribution between 0 and 1. At the
+					beginning of
+					the day phase, another random number between 0 and 1 is sampled. If an agent's <i>s</i> is
+					greater than or equal to this number, they are marked as wanting to engage in a conversation.
+					Conversations can only occur between two agents if both of them are marked as wanting to talk.
+
+					In the actual game of Mafia, player conversations provide valuable information as participants
+					observe
+					human behavior cues such as stuttering, excessive blinking, or signs of lying to identify suspicious
+					individuals. Additionally, the mafia attempts to
+					manipulate other agents into voting for innocent townsfolk instead of themselves. However, in our
+					model,
+					we limit conversations to two players, allowing them to assess whether the other agent is displaying
+					suspicious behavior or not.
+
+					The subsequent sections will provide further details on the implementation of suspicion and how
+					agents
+					behave when they suspect another agent.</p>
+
 				<!-- Knowledge types -->
-				<h3>Knowledge types</h3>
-				<dl>
-					<ul>
-						<li>Agent <i>i</i> is a villager, mafiosi or detective = <i>v<sub>i</sub></i>,
-							<i>m<sub>i</sub></i>, <i>d<sub>i</sub></i>, respectively
-						</li>
-						<li>Agent <i>i</i> is acting suspiciously: <i>sus<sub>i</sub></i></li>
-						<li>Agent <i>i</i> has been killed: <i>dead<sub>i</sub></i></li>
-					</ul>
-				</dl>
+				<h2>Knowledge and Reasoning</h2>
+				<h3>Knowledge Types</h3>
+
+				There are three types of knowledge we represent in the model, namely:
+				<ul>
+					<li>Role-related knowledge: Agent <i>i</i> is a villager, mafiosi or detective =
+						<i>v<sub>i</sub></i>,
+						<i>m<sub>i</sub></i>, <i>d<sub>i</sub></i>, respectively
+					</li>
+					<li>Knowledege of that agent <i>i</i> is acting suspiciously: <i>sus<sub>i</sub></i></li>
+					<li>Knowledge of that agent <i>i</i> has been killed: <i>dead<sub>i</sub></i></li>
+				</ul>
 
 				<!-- Reasoning: Gaining Knowledge -->
-				<h3>Reasoning: Gaining Knowledge</h3>
-				<dl>
-					<ul>
-						<li>Mafia is always acting suspicious: <i>m<sub>i</sub></i> &rarr; <i>sus<sub>i</sub></i></li>
-						<li>Getting suspicious: (<i>agent<sub>i</sub></i> talks to <i>agent<sub>j</sub></i> &and;
-							<i>sus<sub>j</sub></i>) &rarr; <i>K<sub>i</sub>sus<sub>j</sub></i>
-						</li>
-						<li>Transfering suspicions: (<i>agent<sub>i</sub></i> talks to <i>agent<sub>j</sub></i> &and;
-							<i>K<sub>j</sub>sus<sub>k</sub></i>) &rarr; <i>K<sub>i</sub>K<sub>j</sub>sus<sub>k</sub></i>
-						</li>
-						<li>The detective can get to know whether another agent is Mafia:
-							<ol>
-								<li>(<i>d<sub>i</sub></i> &and; <i>inspect agent<sub>j</sub></i> &and;
-									<i>m<sub>j</sub></i>) &rarr; <i>K<sub>i</sub>m<sub>j</sub></i>
-								</li>
-								<li>(<i>d<sub>i</sub></i> &and; <i>inspect agent<sub>j</sub></i> &and;
-									&not;<i>m<sub>j</sub></i>)&rarr; <i>K<sub>i</sub>&not;m<sub>j</sub></i> </li>
-							</ol>
-						</li>
+				<h3>Reasoning</h3>
+				The agents can obtain the different types of knowledge in a variety of ways. The following rules
+				represent the logical rules of our model. With rule 1 through 4 dealing with how agents can obtain
+				knowledge and 5 through ... dealing with how the agents use it in voting.
 
-					</ul>
-				</dl>
+				<ol>
+					<li>As mentioned above, suspicion of an agent can occur during conversation.
+						To elaborate on this, mafia are always considered to be acting suspiciously as this is inherent
+						to their role: <i>m<sub>i</sub></i> &rarr; <i>sus<sub>i</sub></i></li>
+					<li>Getting suspicious: (<i>agent<sub>i</sub></i> talks to <i>agent<sub>j</sub></i> &and;
+						<i>sus<sub>j</sub></i>) &rarr; <i>K<sub>i</sub>sus<sub>j</sub></i>
+					</li>
+					<li>Transfering suspicions: (<i>agent<sub>i</sub></i> talks to <i>agent<sub>j</sub></i> &and;
+						<i>K<sub>j</sub>sus<sub>k</sub></i>) &rarr; <i>K<sub>i</sub>K<sub>j</sub>sus<sub>k</sub></i>
+					</li>
+					<li>The detective can get to know whether another agent is Mafia:
+						<ol>
+							<li>(<i>d<sub>i</sub></i> &and; <i>inspect agent<sub>j</sub></i> &and;
+								<i>m<sub>j</sub></i>) &rarr; <i>K<sub>i</sub>m<sub>j</sub></i>
+							</li>
+							<li>(<i>d<sub>i</sub></i> &and; <i>inspect agent<sub>j</sub></i> &and;
+								&not;<i>m<sub>j</sub></i>)&rarr; <i>K<sub>i</sub>&not;m<sub>j</sub></i> </li>
+						</ol>
+					</li>
+
+				</ol>
 
 				<!-- Reasoning: Voting -->
 				<h3>Reasoning: Voting</h3>
@@ -139,6 +168,8 @@
 					</ul>
 				</dl>
 
+
+				<h2>The Kripke Model</h2>
 				<!-- Model Initialization: Worlds -->
 				<h3>Model Initialization: Worlds</h3>
 				<dl>
@@ -183,7 +214,7 @@
 				</dl>
 
 				<!-- Formal modal -->
-				<h3>Formal modal</h3>
+				<h3>Formal model</h3>
 				<dl>
 					Kripke model <i>M</i> with <i>&lt;S, &pi;, R<sub>1</sub>, R<sub>2</sub>,..., R<sub>n</sub>&gt;</i>
 					<ul>
