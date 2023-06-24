@@ -118,7 +118,7 @@
 				<h3>2.2 Rules</h3>
 				The following rules represent the logical rules of our model. With rule 1 through 4 dealing with how
 				agents can obtain
-				knowledge and rule 5 and 6 deal with how the agents use it in voting.
+				knowledge and rule 6 and 7 deal with how the agents use it in voting.
 
 				<ol>
 					<li>As mentioned above, suspicion of an agent can occur during conversation.
@@ -135,6 +135,10 @@
 							<i>K<sub>j</sub>sus<sub>k</sub></i>) &rarr;
 							<i>K<sub>i</sub>K<sub>j</sub>sus<sub>k</sub></i></strong>.
 					</li>
+					<li>It becomes common knowledege (by public announcement) that a player has died when he has died through either the mafia or the vote:
+						<strong><i>dead<sub>i</sub> &rarr; C </sub>dead<sub>i</sub></i></strong>.
+					</li>
+					
 					<li>The detective can get to know whether another agent is Mafia with his special ability:
 						<ol class="margin-0">
 							<li><strong>(<i>d<sub>i</sub></i> &and; <i>inspect agent<sub>j</sub></i> &and;
@@ -160,7 +164,7 @@
 						</li>
 						<li>Agents they know other agents are suspicous of:
 							<strong><i>K<sub>i</sub>K<sub>j</sub>sus<sub>k</sub></i> &and; &not;
-							<i>dead<sub>k</sub></i></strong>. We consider this as a second, less trustworthy type of
+								<i>dead<sub>k</sub></i></strong>. We consider this as a second, less trustworthy type of
 							knowledge as it is the agents have not conversated with the suspicious agent themselves.
 						</li>
 						<li>A random agent </li>
@@ -198,74 +202,75 @@
 					probabilitiy of <em>p</em>. This means that it is indeed possible for every single agent to act
 					suspiciously, which results in various extra worlds in the intialization.
 
-					To examplify, say we have a game with two villagers, two mafiosi, and one detective.
-					Considering the possible combinations of roles, we have a total of 5!/(2!2!1!) = 30 different role
+					To examplify, say we have a game with one villager, two mafiosi, and one detective.
+					Considering the possible combinations of roles, we have a total of 4! / 2! = 24 / 2 = 12 different
+					role
 					assignments for the players.
 
 					Additionally, we have the concept of suspicions, where each player can be suspicious or not
 					suspicious. Since the mafia is always suspicious, we don't consider different possibilities for
 					their suspicions. However, the villagers and detective can be suspicious or not suspicious,
-					resulting in 2^3 = 8 different combinations of suspicions for these players.
+					resulting in 2^2 = 4 different combinations of suspicions for these players.
 
-					Therefore, in our model, we have a total of 30 * 8 = 240 different worlds in the Kripke model, each
+					Therefore, in our model, we have a total of 6 * 4 = 48 different worlds in the Kripke model, each
 					representing a unique combination of roles and suspicions for the players.
 
 					As for the relation, we consider the following:
 				<ul>
 					<li>Every agent knows their own role meaning that they can only distinguish between worlds where the
 						their role is assigned in the same way::
-						&forall;((<i>v<sub>x</sub> &rarr; K<sub>x</sub>v<sub>x</sub></i>) &and; (<i>m<sub>x</sub>
-							&rarr; K<sub>x</sub>m<sub>x</sub> </i>) &and; (<i>d<sub>x</sub> &rarr;
-							K<sub>x</sub>d<sub>x</sub> </i>))
+						<strong>&forall;((<i>v<sub>x</sub> &rarr; K<sub>x</sub>v<sub>x</sub></i>) &and;
+							(<i>m<sub>x</sub>
+								&rarr; K<sub>x</sub>m<sub>x</sub> </i>) &and; (<i>d<sub>x</sub> &rarr;
+								K<sub>x</sub>d<sub>x</sub> </i>))</strong>
 					</li>
 					<li>Mafia knows who the other mafia is, meaning that they can only distinguish between worlds where
 						the mafia role is assigned in the same way:
-						&forall;<sub>x</sub>(<i>m<sub>x</sub> &rarr; </i>&forall;<i>y(m<sub>y</sub> &rarr;
-							K<sub>x</sub>m<sub>y</sub> </i>))
+						<strong>&forall;<sub>x</sub>(<i>m<sub>x</sub> &rarr; </i>&forall;<i>y(m<sub>y</sub> &rarr;
+								K<sub>x</sub>m<sub>y</sub> </i>))</strong>
 					</li>
 				</ul>
-				<p>An example initialization of four agents is provided in Figure 1. Note that the names of the worlds
+				<p>To show how large the amount of relations gets for a limited amount players, an example
+					initialization of four agents is provided in Figure 1. Note that the names of the worlds
 					are the first letter of the roles of the agents in order, with a star behind the letter meaning the
 					agent is marked as suspicious.</p>
 
 				<dl>
-					<div class="image"><img src="images/example.png" alt="" />
-						<figcaption><b>Figure 1:</b> Example model initialization with three agents.</figcaption>
+					<div class="image"><img src="images/random.png" alt="" />
+						<figcaption><b>Figure 1:</b> Example model initialization with four agents. Suspicious agents
+							are marked by * after their role, and mafia is always considered to be suspicious. For sake
+							of readability, relation labels are left out.</figcaption>
 					</div>
-					<ul>
-						<li></li>
-					</ul>
 				</dl>
 
 
 
 				<!-- Formal modal -->
 				<h3>3.2 Formal model</h3>
-				<dl>
-					Kripke model <i>M</i> with <i>&lt;S, &pi;, R<sub>1</sub>, R<sub>2</sub>,..., R<sub>n</sub>&gt;</i>
-					<ul>
-						<li>A set of states <i>S = &#123;s<sub>i</sub>&#124;i</i> is a permutation of the roles'
-							distribution</li>
-						<li>A truth assignment &pi; which assigns a truth value to all propositions P where
-							&pi;(<i>s<sub>i</sub>)(role<sub>j</sub>) = t &LeftRightArrow; i<sub>j</sub> = role</i>
-							with <i>role &in; &#123;v,m,d&#125;</i></li>
-						<li>A set of relations for each agent <i>i: R<sub>i</sub> = &#123;(s<sub>i</sub>,
-								s<sub>j</sub>)&#124;&#125;</i> where for each
-							<i>R<sub>j</sub>&#8838; SxS</i> such that
-							<ol>
-								<li><i>R<sub>j</sub> = &#123;(u,v) &in; SxS &#124; &pi;(u)(role<sub>j</sub>) = t
-										&LeftRightArrow; &pi;(v)(role<sub>j</sub>)=t&#125;</i> where <i>j &in;
-										Agents</i></li>
-								<li><i>R<sub>j</sub> = &#123;(u,v) &in; SxS &#124; (&pi;(u)(m<sub>j</sub>) = t and
-										&pi;(u)(m<sub>k</sub>)) = t &LeftRightArrow; &pi;(v)(m<sub>j</sub>) = t and
-										&pi;(v)(m<sub>k</sub>) = t&#125</i>;
-									where <i>j, k &in; Agents</i>
-								</li>
-							</ol>
-						</li>
-					</ul>
-				</dl>
-
+				<p>Formalising everything that has been discussed before, we use a Kripke model <i>M</i> with <i>&lt;S,
+						&pi;, R<sub>1</sub>, R<sub>2</sub>,..., R<sub>n</sub>&gt;</i>, where: </p>
+				<ul>
+					<li><i>S = &#123;s<sub>ij</sub>&#124;, i</i> is a permutation of the roles'
+						distribution and j is a permutation of possible suspiciously acting agents &#125;</li>
+					<li>A truth assignment &pi; which assigns a truth value to all propositions P where
+						&pi;(<i>s<sub>ij</sub>)(role<sub>k</sub>) = t &LeftRightArrow; i<sub>k</sub> = role</i>
+						with <i>role &in; &#123;v,m,d&#125; and &pi;(s<sub>ij</sub>)(sus<sub>k</sub>) = t
+							&LeftRightArrow; j<sub>k</sub> = t </i>.</li>
+					<li>A set of relations for each agent <i>i: R<sub>i</sub> = &#123;(s<sub>i</sub>,
+							s<sub>j</sub>)&#124;&#125;</i> where for each
+						<i>R<sub>j</sub>&#8838; SxS</i> such that
+						<ol>
+							<li><i>R<sub>j</sub> = &#123;(u,v) &in; SxS &#124; &pi;(u)(role<sub>j</sub>) = t
+									&LeftRightArrow; &pi;(v)(role<sub>j</sub>)=t&#125;</i> where <i>j &in;
+									Agents</i> (agents know their own role).</li>
+							<li><i>R<sub>j</sub> = &#123;(u,v) &in; SxS &#124; (&pi;(u)(m<sub>j</sub>) = t and
+									&pi;(u)(m<sub>k</sub>)) = t &LeftRightArrow; &pi;(v)(m<sub>j</sub>) = t and
+									&pi;(v)(m<sub>k</sub>) = t&#125</i>;
+								where <i>j, k &in; Agents </i> (mafia know each others roles).
+							</li>
+						</ol>
+					</li>
+				</ul>
 			</section>
 			<footer>
 				<div class="pagination">
