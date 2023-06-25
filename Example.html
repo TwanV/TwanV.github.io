@@ -51,93 +51,84 @@
 					<span class="date">June 25, 2023</span>
 					<h1>Example run</h1>
 				</header>
-				<p>This page shows an example run.</p>
+				<p>This page shows an example run with a configuration of four players: one villagers, two
+					mafiosi, and one detective.
+					This configuration was chosen as it is the minimal configuration that incorporates both the extra
+					knowledge of mafia and the special ability of the detective. It thus provides the clearest overview
+					that also incorporates all rules of the model, albeit that the townfolk is not the majority. The
+					following subsections will walk through the example run phase by phase.</p>
 
 				<!-- Slideshow Container -->
 				<h2>Day 1</h2>
 				<div class="slideshow-container">
 					<!-- Slides -->
 					<div class="mySlides1">
-						<img src="images/random.png" alt="Image 1">
-						<div class="caption">Caption for Image 1</div>
+						<img src="images/initial_modal.png" alt="Image 1">
+
+						<figcaption><b>Figure 2.1:</b>The initial Kripke model with all possible worlds and relations.
+							The true
+							world is m*vdm*, meaning that only the mafia are marked as suspicious.</figcaption>
 					</div>
 					<div class="mySlides1">
-						<img src="images/example.png" alt="Image 2">
-						<div class="caption">Caption for Image 2</div>
+						<img src="images/discussioncmd1.png" alt="Image 2">
+						<figcaption><b>Figure 2.2:</b>The discussion phase visualized in the command line.</figcaption>
 					</div>
 					<div class="mySlides1">
-						<img src="path/to/image3.jpg" alt="Image 3">
-						<div class="caption">Caption for Image 3</div>
+						<img src="images/afterdiscussion1.png" alt="Image 2">
+						<figcaption><b>Figure 2.3:</b>The Kripke model after the first discussion phase.</figcaption>
 					</div>
 
 					<!-- Previous and Next buttons -->
 					<a class="prev_control" onclick="changeSlide(-1,1)">&#10094;</a>
 					<a class="next_control" onclick="changeSlide(1,1)">&#10095;</a>
 				</div>
-
-
+			
+				<br/>
+				<br/>
 				<h2>Night 1</h2>
 				<div class="slideshow-container">
 					<!-- Slides -->
 					<div class="mySlides2">
-						<img src="images/random.png" alt="Image 4">
-						<div class="caption">Caption for Image 1</div>
+						<img src="images/detectivecmd.png" alt="Image 1">
+						<figcaption><b>Figure 3.1:</b>The detective phase in the command line.</figcaption>
 					</div>
 					<div class="mySlides2">
-						<img src="images/pic02.jpg" alt="Image 5">
-						<div class="caption">Caption for Image 2</div>
+						<img src="images/detective1.png" alt="Image 2">
+						<figcaption><b>Figure 3.2:</b>The Kripke model after the detective has found out that player 4
+							is mafia.</figcaption>
 					</div>
 					<div class="mySlides2">
-						<img src="images/pic03.jpg" alt="Image 6">
-						<div class="caption">Caption for Image 3</div>
+						<img src="images/mafiacmd1.png" alt="Image 2">
+						<figcaption><b>Figure 3.3:</b>The mafia phase in the command line.</figcaption>
 					</div>
-
+					<div class="mySlides2">
+						<img src="images/mafia1.png" alt="Image 2">
+						<figcaption><b>Figure 3.4:</b>The Kripke model after the mafia has killed the detective.
+						</figcaption>
+					</div>
 					<!-- Previous and Next buttons -->
-					<a class="prev_control" onclick="changeSlide(-1, 2)">&#10094;</a>
-					<a class="next_control" onclick="changeSlide(1, 2)">&#10095;</a>
+					<a class="prev_control" onclick="changeSlide(-1,2)">&#10094;</a>
+					<a class="next_control" onclick="changeSlide(1,2)">&#10095;</a>
 				</div>
-				
-				
+					
+				<br/>
+				<br/>
 				<h2>Day 2</h2>
 				<div class="slideshow-container">
 					<!-- Slides -->
 					<div class="mySlides3">
-						<img src="images/random.png" alt="Image 4">
-						<div class="caption">Caption for Image 1</div>
+						<img src="images/discussioncmd2.png" alt="Image 4">
+						<figcaption><b>Figure 4.1:</b>The second discussion phase visualized in the command line.</figcaption>
 					</div>
 					<div class="mySlides3">
-						<img src="images/pic02.jpg" alt="Image 5">
-						<div class="caption">Caption for Image 2</div>
-					</div>
-					<div class="mySlides3">
-						<img src="images/pic03.jpg" alt="Image 6">
-						<div class="caption">Caption for Image 3</div>
+						<img src="images/firstvote.png" alt="Image 5">
+						<figcaption><b>Figure 4.2:</b>The Kripke model after the second discussion and first vote.
+						</figcaption>
 					</div>
 
 					<!-- Previous and Next buttons -->
 					<a class="prev_control" onclick="changeSlide(-1, 3)">&#10094;</a>
 					<a class="next_control" onclick="changeSlide(1, 3)">&#10095;</a>
-				</div>
-
-				<h2>Night 2</h2>
-				<div class="slideshow-container">
-					<!-- Slides -->
-					<div class="mySlides4">
-						<img src="images/random.png" alt="Image 4">
-						<div class="caption">Caption for Image 1</div>
-					</div>
-					<div class="mySlides4">
-						<img src="images/pic02.jpg" alt="Image 5">
-						<div class="caption">Caption for Image 2</div>
-					</div>
-					<div class="mySlides4">
-						<img src="images/pic03.jpg" alt="Image 6">
-						<div class="caption">Caption for Image 3</div>
-					</div>
-
-					<!-- Previous and Next buttons -->
-					<a class="prev_control" onclick="changeSlide(-1, 4)">&#10094;</a>
-					<a class="next_control" onclick="changeSlide(1, 4)">&#10095;</a>
 				</div>
 			</section>
 
