@@ -24,6 +24,65 @@ section, summary, time, mark, audio, video {
 	font-size: 100%;
 	font: inherit;
 	vertical-align: baseline;}
+    /* Slideshow Container */
+    .slideshow-container {
+		position: relative;
+		max-width: 800px;
+		margin: 0 auto;
+	  }
+	  
+	  /* Slides */
+	  .mySlides1, .mySlides2, .mySlides3, .mySlides4 {
+		display: none;
+		text-align: center;
+	  }
+	  
+	  .mySlides1 img, .mySlides2 img, .mySlides3 img, .mySlides4 img  {
+		width: 100%;
+		height: auto;
+		display: inline-block;
+	  }
+	  
+	  /* Caption text */
+	  .caption {
+		position: absolute;
+		bottom: 0;
+		width: 100%;
+		text-align: center;
+		background-color: #fff;
+		color: #000;
+		padding: 10px;
+		font-size: 14px;
+	  }
+	  
+	  /* Previous and Next buttons */
+	  .prev_control, .next_control {
+		cursor: pointer;
+		position: absolute;
+		top: 50%;
+		width: auto;
+		padding: 16px;
+		margin-top: -22px;
+		color: #000;
+		font-weight: bold;
+		font-size: 18px;
+		transition: 0.6s ease;
+		border-radius: 0 3px 3px 0;
+		user-select: none;
+		background-color: transparent;
+	  }
+	  
+	  /* Position the Next button */
+	  .next_control {
+		right: 0;
+		border-radius: 3px 0 0 3px;
+	  }
+	  
+	  /* On hover, add a black background color with a little bit see-through */
+	  .prev_control:hover, .next_control:hover {
+		background-color: rgba(0, 0, 0, 0.8);
+		color: #fff;
+	  }
 
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
