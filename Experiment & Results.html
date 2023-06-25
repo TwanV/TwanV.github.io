@@ -74,17 +74,42 @@
 					We do this, as we suppose that a higher <em>s</em> should provide for more conversations and
 					therefore more strategizing. Therefore, it should allow us to get a clearer insight into the
 					influence of epistemic logic on the overall result. Note that the probability of being marked
-					suspicious will always be set to 25%.
+					suspicious will always be set to 25%, the maximum number of talks to be had is set to 3 and that for
+					all agents <em>s</em> is sampled from a uniform distribution between 0 and 0.5.
 
 					<br />
-					All configurations will be ran 100 times, keeping track of what faction won the as the evaluation metric.
+					The model will be ran across both strategies for a total of 100 times, keeping track of what
+					faction
+					won the as the evaluation
+					metric.
 				</p>
 
 
 				<h2>2. Results</h2>
 				<h3>2.1 Incorporation of Logic</h3>
+				Figure 5 shows the winrates of both factions with and without the incorporation of logic. We observe
+				that when voting randomly, the townfolk win more often than not. Moreover, when logic is incorporated
+				into the model, the townfolk manages to get up to a winrate of 77% which is significantly higher than
+				the 64% achieved when voting randomly.
+
+				<div class="image"><img src="images/wins.png" class="cntr" alt="" />
+					<figcaption><b>Figure 5:</b> The winrates of both factions for random voting and killing against
+						voting and killing with the incorporation of logic. </figcaption>
+				</div>
+
 				<h3>2.2 Influence of Conversations</h3>
+				Figure 2 shows the winrate of the townfolk across the different sociability values. Note that logic is
+				incorporated in these runs, as sociability has no function in the random case.
+				We observe that a higher sociability causes a higher winrate, albeit that some differences between bins
+				fall within the standard deviation.
+
+				<div class="image cntr"><img src="images/sociability.png" class="cntr" alt="" />
+					<figcaption><b>Figure 6:</b> Example model initialization with four agents. Suspicious agents
+						are marked by * after their role, and mafia is always considered to be suspicious. For sake
+						of readability, relation labels are left out.</figcaption>
+				</div>
 			</section>
+
 			<footer>
 				<div class="pagination">
 					<a href="Example.html" class="previous">Prev</a>

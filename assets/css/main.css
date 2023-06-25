@@ -95,7 +95,13 @@ video {
 	font: inherit;
 	vertical-align: baseline;
 }
+figcaption{
+	justify-self: flex-end;
+}
 
+.cntr {
+	margin:auto
+}
 /* Slideshow Container */
 .slideshow-container {
 	position: relative;
@@ -112,6 +118,7 @@ video {
 .mySlides2,
 .mySlides3,
 .mySlides4 {
+	transition: opacity 0.5s ease;
 	display: none;
 	text-align: center;
 

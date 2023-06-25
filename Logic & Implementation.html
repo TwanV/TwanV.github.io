@@ -54,9 +54,9 @@
 				<!-- Agents -->
 				<h2>1. Agents</h2>
 				<p>In our model, there are three types of agent roles: villager, mafia, and detective. We have chosen
-					to limit the roles to three to keep the model relatively simple. The roles of Mafia and Villager are
+					to limit the roles to three to keep the model relatively simple. The roles of mafia and villager are
 					essential for the
-					game, but to further incorporate logic, the role of detective has been added.
+					game to function. To further incorporate logic, the role of detective has been added.
 					Each role has its own
 					characteristics and abilities:</p>
 				<ul>
@@ -65,7 +65,7 @@
 						is a passive role, that is only able to participate in voting during the day phase.
 					</li>
 					<li>
-						<strong>Mafia</strong> is a more knowledgable and powerful role. They know who the other mafiosi
+						<strong>Mafia</strong> is a more knowledgable and powerful role. They know who the other mafia
 						are and are able to murder other players during the night phase.
 					</li>
 					<li>
@@ -79,14 +79,17 @@
 				<p>
 					During the day phase, all agents have the ability to interact with each other before voting. This
 					interaction allows them to gather information and identify potential mafia members who may be acting
-					suspiciously. To determine the likelihood of agents initiating a conversation, we assign each of
+					suspiciously. Note that in the first day phase, no vote takes place in Mafia. 
+					<br/>
+					To determine the likelihood of
+					agents initiating a conversation, we assign each of
 					them a
-					sociability stat (<i>s</i>), randomly sampled from a uniform distribution. At the
+					sociability stat (<i>s</i>), randomly sampled from a uniform distribution between 0.5 and 1. At the
 					beginning of
 					the day phase, another random number between 0 and 1 is sampled. If an agent's <i>s</i> is
 					greater than or equal to this number, they are marked as wanting to engage in a conversation.
 					Conversations can only occur between two agents if both of them are marked as wanting to talk.
-
+					<br />
 					In the actual game of Mafia, player conversations provide valuable information as participants
 					observe
 					human behavior cues such as stuttering, excessive blinking, or signs of lying to identify suspicious
@@ -95,10 +98,15 @@
 					model,
 					we limit conversations to two players, allowing them to assess whether the other agent is displaying
 					suspicious behavior or not.
+					</br />
+					The night phase of our model consists of two actions. The first of the detective using its special
+					ability to figure out another player's role and the second being the mafia killing a player of
+					choice.
 
 					The subsequent sections will provide further details on the implementation of suspicion and how
 					agents
-					behave when they suspect another agent.</p>
+					behave when they suspect another agent.
+				</p>
 
 				<!-- Knowledge types -->
 				<h2>2. Knowledge and Rules</h2>
@@ -135,10 +143,11 @@
 							<i>K<sub>j</sub>sus<sub>k</sub></i>) &rarr;
 							<i>K<sub>i</sub>K<sub>j</sub>sus<sub>k</sub></i></strong>.
 					</li>
-					<li>It becomes common knowledege (by public announcement) that a player has died when he has died through either the mafia or the vote:
+					<li>It becomes common knowledege (by public announcement) that a player has died when he has died
+						through either the mafia or the vote:
 						<strong><i>dead<sub>i</sub> &rarr; C </sub>dead<sub>i</sub></i></strong>.
 					</li>
-					
+
 					<li>The detective can get to know whether another agent is Mafia with his special ability:
 						<ol class="margin-0">
 							<li><strong>(<i>d<sub>i</sub></i> &and; <i>inspect agent<sub>j</sub></i> &and;
@@ -160,7 +169,7 @@
 					<li>Townfolk vote on (in order):</li>
 					<ol class="margin-0">
 						<li>Agents that they are suspicous of: <strong><i>K<sub>i</sub>sus<sub>j</sub></i> &and; &not;
-								<i>dead<sub>j</sub></i></strong>.
+								<i>vote<sub>j</sub></i></strong>.
 						</li>
 						<li>Agents they know other agents are suspicous of:
 							<strong><i>K<sub>i</sub>K<sub>j</sub>sus<sub>k</sub></i> &and; &not;
@@ -180,7 +189,7 @@
 					approach in real-life Mafia games to break voting deadlocks <a href="References.html">[2]</a>.</p>
 
 				<h2>3. The Kripke Model</h2>
-				<p>To model the agents knowledge and what they consider to be possible, we use a kripke model <a
+				<p>To model the agents knowledge and what they consider to be possible, we use a Kripke model <a
 						href="References.html">[3]</a>. This is a
 					mathematical structure used in modal logic to represent the knowledge and belief states of agents in
 					a
@@ -199,23 +208,25 @@
 					It is initialized with every possible permutation of the chosen roles, along with possible
 					combinations for which agents can be suspicious. As mentioned previously, mafia is always considered
 					to be acting suspiciously. Alongside this however, we mark every other role as suspicious with a
-					probabilitiy of <em>p</em>. This means that it is indeed possible for every single agent to act
+					probability of <em>p</em>. This is done to represent the fact that it is also possible to get
+					suspicious of players who
+					aren't mafia. This means that it is possible for every single agent to act
 					suspiciously, which results in various extra worlds in the intialization.
-
+					<br />
 					To examplify, say we have a game with one villager, two mafiosi, and one detective.
 					Considering the possible combinations of roles, we have a total of 4! / 2! = 24 / 2 = 12 different
 					role
 					assignments for the players.
-
+					<br />
 					Additionally, we have the concept of suspicions, where each player can be suspicious or not
 					suspicious. Since the mafia is always suspicious, we don't consider different possibilities for
 					their suspicions. However, the villagers and detective can be suspicious or not suspicious,
 					resulting in 2^2 = 4 different combinations of suspicions for these players.
-
+					<br />
 					Therefore, in our model, we have a total of 6 * 4 = 48 different worlds in the Kripke model, each
 					representing a unique combination of roles and suspicions for the players.
-
-					As for the relation, we consider the following:
+					<br />
+					As for the relations, we consider the following:
 				<ul>
 					<li>Every agent knows their own role meaning that they can only distinguish between worlds where the
 						their role is assigned in the same way::

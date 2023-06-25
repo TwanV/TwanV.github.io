@@ -55,11 +55,18 @@
 					mafiosi, and one detective.
 					This configuration was chosen as it is the minimal configuration that incorporates both the extra
 					knowledge of mafia and the special ability of the detective. It thus provides the clearest overview
-					that also incorporates all rules of the model, albeit that the townfolk is not the majority. The
+					that also incorporates all rules of the model (described in <a
+						href="Logic & Implementation.html">Implementation</a>), albeit that the townfolk is not the
+					majority. To keep this run as simple as possible, only two talking rounds are allowed per discussion
+					phase. The
 					following subsections will walk through the example run phase by phase.</p>
 
 				<!-- Slideshow Container -->
 				<h2>Day 1</h2>
+
+				<br />
+				<br />
+
 				<div class="slideshow-container">
 					<!-- Slides -->
 					<div class="mySlides1">
@@ -82,10 +89,29 @@
 					<a class="prev_control" onclick="changeSlide(-1,1)">&#10094;</a>
 					<a class="next_control" onclick="changeSlide(1,1)">&#10095;</a>
 				</div>
-			
-				<br/>
-				<br/>
+
+				<br />
+				<br />
+				<br />
+				<p>
+					Figure 2 illustrates the initial phase of the example run. It is evident that the model is highly
+					complex right from the beginning, and all agents believe a large amount worlds to be possible. The
+					actual
+					world, denoted as m*vdm*, consists of agent 1 and 4 being mafia, agent 2 being a villager, and agent
+					3
+					acting as the detective. In this case, only the mafia members are flagged as suspicious, indicated
+					by the asterisk (*) appended to their names. During the discussion phase, agent 4 initiates a
+					conversation with agent 2, and afterwards, agent 2 engages in dialogue with agent 4. Consequently,
+					agent 2 becomes aware of agent 4's suspicious behavior by <strong>(<i>agent<sub>2</sub></i> talks to
+						<i>agent<sub>4</sub></i> &and;
+						<i>sus<sub>4</sub></i>) &rarr; <i>K<sub>2</sub>sus<sub>4</sub></i></strong>. As a result, R2
+					limits the possible worlds to only those accommodating this new information.
+					Note that if these conversations had happened the other way around, that the mafia would have
+					found out about the suspicion of agent 2.
+				</p>
+
 				<h2>Night 1</h2>
+				<br />
 				<div class="slideshow-container">
 					<!-- Slides -->
 					<div class="mySlides2">
@@ -110,15 +136,34 @@
 					<a class="prev_control" onclick="changeSlide(-1,2)">&#10094;</a>
 					<a class="next_control" onclick="changeSlide(1,2)">&#10095;</a>
 				</div>
-					
-				<br/>
-				<br/>
+
+				<br />
+				<br />
+				<br />
+				<p>
+					Figure 3 illustrates the first night phase of the example run. During this phase, the detective
+					acquires crucial information, discovering that agent 4 is a member of the Mafia. This discovery
+					triggers the logical rule
+					<strong>(<i>d<sub>3</sub></i> &and; <i>inspect agent<sub>4</sub></i> &and;
+						<i>m<sub>4</sub></i>) &rarr; <i>K<sub>3</sub>m<sub>4</sub></i></strong>, which comes into
+					effect. As shown in Figure 3.2, the detective's belief now restricts possible worlds to those where
+					agent 4 is identified as a mafia member.
+					<br />
+					Unfortunately for the townfolk, the mafia collectively decides to
+					eliminate the detective. Consequently, the logical rule
+					<strong><i>dead<sub>3</sub> &rarr; C </sub>dead<sub>3</sub></i></strong> takes effect. This leads to
+					a narrowing of possible worlds, where only scenarios in which the detective is agent 3 remain viable
+					for the agents, as depicted in Figure 3.4.
+				</p>
 				<h2>Day 2</h2>
+				<br />
+				<br />
 				<div class="slideshow-container">
 					<!-- Slides -->
 					<div class="mySlides3">
 						<img src="images/discussioncmd2.png" alt="Image 4">
-						<figcaption><b>Figure 4.1:</b>The second discussion phase visualized in the command line.</figcaption>
+						<figcaption><b>Figure 4.1:</b>The second discussion phase visualized in the command line.
+						</figcaption>
 					</div>
 					<div class="mySlides3">
 						<img src="images/firstvote.png" alt="Image 5">
@@ -130,6 +175,28 @@
 					<a class="prev_control" onclick="changeSlide(-1, 3)">&#10094;</a>
 					<a class="next_control" onclick="changeSlide(1, 3)">&#10095;</a>
 				</div>
+				<br />
+				<br />
+				<br />
+				<p>
+					There are only three players left now, two of which are mafia. The townfolk are thus already certain
+					of defeat. The model, however, runs until
+					only mafia or townfolk are left, so we proceed to the next day phase. Only the first talking round
+					is used by the agents, where agents 4 and 2 exchange knowledge.
+					Agent 2 learns nothing new, as he/she already knew agent 4 to be suspicious. Agent 4 however, now
+					finds
+					out that agent 2 is suspicious of him, because
+					of <strong>(<i>agent<sub>4</sub></i> talks to <i>agent<sub>2</sub></i> &and;
+						<i>K<sub>2</sub>sus<sub></sub></i>) &rarr;
+						<i>K<sub>4</sub>K<sub>2</sub>sus<sub>4</sub></i></strong>.
+					The mafia then decides to vote out agent 2, leading to their victory since there are no townfolk
+					remaining. In this case, agent 2 is chosen for elimination because the mafia never vote against
+					each other. However, if there were more agents remaining, the same outcome would occur based on
+					their voting/murder rule:
+					<strong><i>K<sub>4</sub>K<sub>2</sub>sus<sub>4</sub></i>
+						&and; &not; <i>dead<sub>2</sub></i></strong>.
+				</p>
+
 			</section>
 
 
@@ -167,11 +234,13 @@
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/html5up-alpha-dust@2.0.1/assets/js/jquery.poptrox.min.js"></script>
 		<script>
-			var slideIndex = [1, 1];
+			var slideIndex = [1, 1, 1];
 			showSlides(1, 1);
 			showSlides(1, 2);
+			showSlides(1, 3);
 
 			function changeSlide(n, slideshowIndex) {
+				console.log("working")
 				showSlides(slideIndex[slideshowIndex - 1] += n, slideshowIndex);
 			}
 
@@ -188,7 +257,8 @@
 				for (var i = 0;i < slides.length;i++) {
 					slides[i].style.display = "none";
 				}
-
+				console.log(slides)
+				console.log(slideIndex[slideshowIndex - 1] - 1)
 				slides[slideIndex[slideshowIndex - 1] - 1].style.display = "block";
 			}
 		</script>
